@@ -54,15 +54,6 @@ def carregar_dividir_img(directory_path, patch_size):
 #    return instances
 
 
-#def get_minimum_image_size(instances):
-#    min_x = math.inf
-#    min_y = math.inf
-#    for image in instances:
-#        min_x = image.shape[0] if image.shape[0] < min_x else min_x
-#        min_y = image.shape[1] if image.shape[1] < min_y else min_y
-#    return min_x, min_y
-
-
 def mostrar_img(instances, rows=2, titles=None):
     n = len(instances)
     cols = n // rows if (n / rows) % rows == 0 else (n // rows) + 1
@@ -72,9 +63,7 @@ def mostrar_img(instances, rows=2, titles=None):
         plt.title('') if titles is None else plt.title(titles[j])
         plt.axis("off")
         plt.imshow(image)
-
     plt.show()
-
 
 def informacao_treinamento(root_directory):
     image_dataset, mask_dataset = [], []
@@ -89,20 +78,6 @@ def informacao_treinamento(root_directory):
                     carregar_dividir_img(os.path.join(path, subdirectory), patch_size=patch_size))
     return np.array(image_dataset), np.array(mask_dataset)
 
-
-#def segmentacao_binaria(image_dataset, mask_dataset):
-#    x_reduced, y_reduced = [], []
-#    for j, mask in tqdm(enumerate(mask_dataset)):
-#        _img_height, _img_width, _img_channels = mask.shape
-#        binary_image = np.zeros((_img_height, _img_width, 1)).astype(int)
-#        for row in range(_img_height):
-#            for col in range(_img_width):
-#                rgb = mask[row, col, :]
-#                binary_image[row, col] = 1 if rgb[0] == 60 and rgb[1] == 16 and rgb[2] == 152 else 0
-#        if np.count_nonzero(binary_image == 1) > 0.15 * binary_image.size:
-#            x_reduced.append(image_dataset[j])
-#            y_reduced.append(binary_image)
-#    return np.array(x_reduced), np.array(y_reduced)
 
 class MaskColorMap(Enum):
     Unlabelled = (155, 155, 155)
